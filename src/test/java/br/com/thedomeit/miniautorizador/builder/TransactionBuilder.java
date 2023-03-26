@@ -18,15 +18,6 @@ public class TransactionBuilder {
                              .build();
     }
 
-    public static TransactionDto newTransactionNonexistentCard() {
-        return TransactionDto.builder()
-                             .numeroCartao("4444444444444444")
-                             .senhaCartao("4444")
-                             .valor(BigDecimal.valueOf(54.33))
-                             .build();
-    }
-
-
 	public static TransactionDto newTransactionValid() {
 	        return TransactionDto.builder()
 	                             .numeroCartao("1234567890333444")
@@ -34,12 +25,4 @@ public class TransactionBuilder {
 	                             .valor(BigDecimal.valueOf(500))
 	                             .build();
 	    }
-
-    public static TransactionDto newTransactionInsufficientFunds() {
-	        return TransactionDto.builder()
- 	                             .numeroCartao("1234534343423456")
-	                             .senhaCartao("1234")
-	                             .valor(BigDecimal.valueOf(20.34))
-	                             .build();
-    }
 }

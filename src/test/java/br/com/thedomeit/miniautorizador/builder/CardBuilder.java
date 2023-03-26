@@ -38,19 +38,4 @@ public class CardBuilder {
                 .build();
     }
 
-    public static CardDto duplicateCard() {
-        return CardDto.builder()
-                .numeroCartao("1234567890767676")
-                .senhaCartao("1234")
-                .build();
-    }
-
-    public static VrCard newVrCardInsufficientFunds() {
-        return VrCard.builder()
-                .id(2L)
-                .cardNumber("1545454545456656")
-                .password("1234")
-                .balance(BigDecimal.valueOf(500))
-                .build();
-    }    
 }
