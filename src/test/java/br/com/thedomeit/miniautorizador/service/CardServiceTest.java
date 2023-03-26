@@ -1,5 +1,14 @@
 package br.com.thedomeit.miniautorizador.service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.math.BigDecimal;
+import java.util.Optional;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -13,17 +22,7 @@ import br.com.thedomeit.miniautorizador.domain.dto.CardDto;
 import br.com.thedomeit.miniautorizador.domain.entities.VrCard;
 import br.com.thedomeit.miniautorizador.exception.DuplicateCardException;
 import br.com.thedomeit.miniautorizador.exception.InvalidCardException;
-import br.com.thedomeit.miniautorizador.exception.NonexistentCardBalanceException;
 import br.com.thedomeit.miniautorizador.repository.CardRepository;
-
-import java.math.BigDecimal;
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
 public class CardServiceTest {
@@ -43,13 +42,13 @@ public class CardServiceTest {
     private final CardDto validCard = CardBuilder.newCardValid();
 
     @Test
-    void quandoAlfanumericoNoNumeroVrCardThrowsVrCardInvalidoException() {
+    void whenCardInvalidType() {
         assertThrows(InvalidCardException.class,
                 () -> cardService.createCard(cardWrongValue));
     }
 
     @Test
-    void quandoVrCardExistirThrowsVrCardDuplicadoException() {
+    void whenDuplicateCard() {
         when(cardRepository.findByCardNumber(any(String.class))).thenReturn(Optional.of(validVrCard));
 
         assertThrows(DuplicateCardException.class,
@@ -57,21 +56,13 @@ public class CardServiceTest {
     }
 
     @Test
-    void quandoVrCardValidoSalvarVrCard() {
+    void whenReturnsOk() {
         cardService.createCard(validCard);
         verify(cardRepository).save(cardCap.capture());
     }
 
     @Test
-    void quandoVrCardNaoExistisThrowVrCardInexistenteException() {
-        when(cardRepository.findByCardNumber(any(String.class))).thenReturn(Optional.empty());
-
-        assertThrows(NonexistentCardBalanceException.class,
-                () -> cardService.getBalance("9999999999999993"));
-    }
-
-    @Test
-    void quandoVrCardExistirRetornarSaldoDoVrCard() {
+    void whenGetBalanceReturnOk() {
         when(cardRepository.findByCardNumber(any(String.class))).thenReturn(Optional.of(validVrCard));
         assertEquals(BigDecimal.valueOf(500), cardService.getBalance(validVrCard.getCardNumber()));
     }

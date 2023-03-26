@@ -17,14 +17,14 @@ public class CardBuilder {
 
     public static CardDto newCardWrongValue() {
         return CardDto.builder()
-                .numeroCartao("dd49873xx56342vv")
+                .numeroCartao("AAAA123465667888")
                 .senhaCartao("1234")
                 .build();
     }
 
     public static CardDto newCardValid() {
         return CardDto.builder()
-                .numeroCartao("6543210987654321")
+                .numeroCartao("1234567890123456")
                 .senhaCartao("1234")
                 .build();
     }
@@ -32,7 +32,7 @@ public class CardBuilder {
     public static VrCard newVrCard() {
         return VrCard.builder()
                 .id(1L)
-                .cardNumber("1149873445634233")
+                .cardNumber("6543210987654321")
                 .password("1234")
                 .balance(BigDecimal.valueOf(500))
                 .build();
@@ -40,7 +40,7 @@ public class CardBuilder {
 
     public static CardDto duplicateCard() {
         return CardDto.builder()
-                .numeroCartao("1149873445634233")
+                .numeroCartao("1234567890767676")
                 .senhaCartao("1234")
                 .build();
     }
@@ -48,7 +48,7 @@ public class CardBuilder {
     public static VrCard newVrCardInsufficientFunds() {
         return VrCard.builder()
                 .id(2L)
-                .cardNumber("1149873445634233")
+                .cardNumber("1545454545456656")
                 .password("1234")
                 .balance(BigDecimal.valueOf(500))
                 .build();

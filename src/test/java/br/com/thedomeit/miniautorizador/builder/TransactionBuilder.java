@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class TransactionBuilder {
     public static TransactionDto newTransactionInvalidPassword() {
         return TransactionDto.builder()
-                             .numeroCartao("1149873445634233")
+                             .numeroCartao("1234567890123456")
                              .senhaCartao("5555")
                              .valor(BigDecimal.valueOf(500))
                              .build();
@@ -29,7 +29,7 @@ public class TransactionBuilder {
 
 	public static TransactionDto newTransactionValid() {
 	        return TransactionDto.builder()
-	                             .numeroCartao("1149873445634233")
+	                             .numeroCartao("1234567890333444")
 	                             .senhaCartao("1234")
 	                             .valor(BigDecimal.valueOf(500))
 	                             .build();
@@ -37,7 +37,7 @@ public class TransactionBuilder {
 
     public static TransactionDto newTransactionInsufficientFunds() {
 	        return TransactionDto.builder()
- 	                             .numeroCartao("1149873445634233")
+ 	                             .numeroCartao("1234534343423456")
 	                             .senhaCartao("1234")
 	                             .valor(BigDecimal.valueOf(20.34))
 	                             .build();
