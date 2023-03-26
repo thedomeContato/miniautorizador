@@ -36,9 +36,6 @@ public class VrCard implements Serializable{
 	@Column(name="NR_CARD", nullable = false)
 	private String cardNumber;
 	
-	@Column(name="NM_CLIENTE", nullable = false)
-	private String clientName;
-	
 	@Column(name="DT_CREATION", nullable = false)
 	private LocalDateTime creationDate;
 	

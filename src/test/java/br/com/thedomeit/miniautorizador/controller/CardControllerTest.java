@@ -16,6 +16,7 @@ import br.com.thedomeit.miniautorizador.domain.dto.CardDto;
 import br.com.thedomeit.miniautorizador.exception.DuplicateCardException;
 import br.com.thedomeit.miniautorizador.exception.InvalidCardException;
 import br.com.thedomeit.miniautorizador.exception.NonexistentCardBalanceException;
+import br.com.thedomeit.miniautorizador.service.CardService;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -75,7 +76,7 @@ public class CardControllerTest {
     }
 
     @Test
-    void whenCreateCardWithWrongValuesOfCamp() throws Exception {
+    void whenCreateCardWithWrongValuesOfField() throws Exception {
         when(cardService.createCard(cardWrongValue))
                           .thenThrow(InvalidCardException.class);
 
