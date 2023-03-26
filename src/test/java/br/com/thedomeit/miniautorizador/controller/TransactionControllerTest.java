@@ -7,6 +7,7 @@ import br.com.thedomeit.miniautorizador.domain.dto.TransactionDto;
 import br.com.thedomeit.miniautorizador.exception.InsufficientFundsException;
 import br.com.thedomeit.miniautorizador.exception.InvalidPasswordException;
 import br.com.thedomeit.miniautorizador.exception.NonexistentCardTransactionException;
+import br.com.thedomeit.miniautorizador.service.TransactionService;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -59,7 +60,7 @@ public class TransactionControllerTest {
 
     @Test
     void whenTransactionNonexistentCard() throws Exception {
-        doThrow(NonexistentCardTransactionException.class).when(transactionService).makeTransaction(transactionCardNonexistent);
+        doThrow(NonexistentCardTransactionException.class).when(transactionService).startTransaction(transactionCardNonexistent);
 
         mockMvc.perform(post(BASE_URL)
                         .contentType(APPLICATION_JSON)
@@ -70,7 +71,7 @@ public class TransactionControllerTest {
 
     @Test
     void whenTransactionInvalidPassword() throws Exception {
-        doThrow(InvalidPasswordException.class).when(transactionService).makeTransaction(transactionInvalidPassword);
+        doThrow(InvalidPasswordException.class).when(transactionService).startTransaction(transactionInvalidPassword);
 
         mockMvc.perform(post(BASE_URL)
                         .contentType(APPLICATION_JSON)
@@ -81,7 +82,7 @@ public class TransactionControllerTest {
 
     @Test
     void whenInsufficientFunds() throws Exception {
-        doThrow(InsufficientFundsException.class).when(transactionService).makeTransaction(transactionInsufficientFunds);
+        doThrow(InsufficientFundsException.class).when(transactionService).startTransaction(transactionInsufficientFunds);
 
         mockMvc.perform(post(BASE_URL)
                         .contentType(APPLICATION_JSON)

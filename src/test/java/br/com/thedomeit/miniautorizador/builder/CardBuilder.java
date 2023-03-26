@@ -45,7 +45,7 @@ public class CardBuilder {
                 .build();
     }
 
-    public static VrCard cartaoPadraoSaldoInsuficienteEntidade() {
+    public static VrCard newVrCardInsufficientFunds() {
         return VrCard.builder()
                 .id(2L)
                 .cardNumber("1149873445634233")
