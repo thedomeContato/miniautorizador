@@ -32,7 +32,8 @@ public class SwaggerConfig {
                 .apis(RequestHandlerSelectors.withClassAnnotation(RestController.class))
                 .paths(PathSelectors.any())
                 .build()
-                .tags(new Tag("VRCARD", "These endpoints are used in VR Card Record Maintenance Operations.", 1));
+                .tags(new Tag("VRCARD", "These endpoints are used in VR Card Record Maintenance Operations.", 1),
+                	  new Tag("TRANSACTION", "These endpoints are used in Transaction Control Record Maintenance Operations.", 1));
     }
 
     private ApiInfo apiInfo() {

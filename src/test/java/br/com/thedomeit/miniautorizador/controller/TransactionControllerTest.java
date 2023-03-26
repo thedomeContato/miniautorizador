@@ -36,13 +36,13 @@ public class TransactionControllerTest {
     @MockBean
     private TransactionService transactionService;
 
-    private final TransactionDto novaTransactionDtoPadrao = TransactionBuilder.newTransactionValid();
+    private final TransactionDto validTransaction = TransactionBuilder.newTransactionValid();
 
-    private final TransactionDto novaTransactionDtoCartaoInexistente = TransactionBuilder.newTransactionNonexistentCard();
+    private final TransactionDto transactionCardNonexistent = TransactionBuilder.newTransactionNonexistentCard();
 
-    private final TransactionDto novaTransactionDtoSenhaIncorreta = TransactionBuilder.newTransactionInvalidPassword();
+    private final TransactionDto transactionInvalidPassword = TransactionBuilder.newTransactionInvalidPassword();
 
-    private final TransactionDto novaTransactionDtoSaldoInsuficiente = TransactionBuilder.newTransactionInsufficientFunds();
+    private final TransactionDto transactionInsufficientFunds = TransactionBuilder.newTransactionInsufficientFunds();
 
     private final static String BASE_URL = "/transacoes";
 
@@ -53,40 +53,40 @@ public class TransactionControllerTest {
         mockMvc.perform(post(BASE_URL)
                         .contentType(APPLICATION_JSON)
                         .accept(APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(novaTransactionDtoPadrao)))
+                        .content(objectMapper.writeValueAsString(validTransaction)))
                 .andExpect(status().isOk());
     }
 
     @Test
     void whenTransactionNonexistentCard() throws Exception {
-        doThrow(NonexistentCardTransactionException.class).when(transactionService).realizarTransactionDto(novaTransactionDtoCartaoInexistente);
+        doThrow(NonexistentCardTransactionException.class).when(transactionService).makeTransaction(transactionCardNonexistent);
 
         mockMvc.perform(post(BASE_URL)
                         .contentType(APPLICATION_JSON)
                         .accept(APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(novaTransactionDtoCartaoInexistente)))
+                        .content(objectMapper.writeValueAsString(transactionCardNonexistent)))
                 .andExpect(status().isUnprocessableEntity());
     }
 
     @Test
     void whenTransactionInvalidPassword() throws Exception {
-        doThrow(InvalidPasswordException.class).when(transactionService).realizarTransactionDto(novaTransactionDtoSenhaIncorreta);
+        doThrow(InvalidPasswordException.class).when(transactionService).makeTransaction(transactionInvalidPassword);
 
         mockMvc.perform(post(BASE_URL)
                         .contentType(APPLICATION_JSON)
                         .accept(APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(novaTransactionDtoSenhaIncorreta)))
+                        .content(objectMapper.writeValueAsString(transactionInvalidPassword)))
                 .andExpect(status().isUnprocessableEntity());
     }
 
     @Test
     void whenInsufficientFunds() throws Exception {
-        doThrow(InsufficientFundsException.class).when(transactionService).realizarTransactionDto(novaTransactionDtoSaldoInsuficiente);
+        doThrow(InsufficientFundsException.class).when(transactionService).makeTransaction(transactionInsufficientFunds);
 
         mockMvc.perform(post(BASE_URL)
                         .contentType(APPLICATION_JSON)
                         .accept(APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(novaTransactionDtoSaldoInsuficiente)))
+                        .content(objectMapper.writeValueAsString(transactionInsufficientFunds)))
                 .andExpect(status().isUnprocessableEntity());
     }
 

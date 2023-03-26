@@ -29,7 +29,7 @@ public class CardBuilder {
                 .build();
     }
     
-    public static VrCard cartaoPadraoEntidade() {
+    public static VrCard newVrCard() {
         return VrCard.builder()
                 .id(1L)
                 .cardNumber("1149873445634233")

@@ -5,24 +5,26 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+@Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter @Setter
+@Entity
 @ToString
-@Table(name = "VRCARD")
 public class VrCard implements Serializable{
 
 	private static final long serialVersionUID = 1L;

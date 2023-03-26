@@ -37,61 +37,61 @@ public class CardControllerTest {
     private ObjectMapper objectMapper;
 
     @MockBean
-    private CardService cartaoService;
+    private CardService cardService;
 
-    private final CardDto cartaoPadraoDuplicado = CardBuilder.duplicateCard();
+    private final CardDto duplicateCard = CardBuilder.duplicateCard();
 
-    private final CardDto novoCartaoCorreto = CardBuilder.newCardValid();
+    private final CardDto validCard = CardBuilder.newCardValid();
 
-    private final CardDto novoCartaoComAlfaNumerico = CardBuilder.newCardWrongValue();
+    private final CardDto cardWrongValue = CardBuilder.newCardWrongValue();
 
     private final static String BASE_URL = "/cartoes";
 
     private final static String APPLICATION_JSON = "application/json";
 
-    private final static String NUMERO_CARTAO_VALIDO = "1149873445634233";
+    private final static String VALID_CARD = "1111222233334444";
 
-    private final static String NUMERO_CARTAO_INEXISTENTE = "3333333333333333";
+    private final static String NONEXISTENT_CARD = "1213123112312312";
 
     @Test
     void quandoCartaoCriadoComSucessoRetornaHttpStatusCode201() throws Exception {
         mockMvc.perform(post(BASE_URL)
                 .contentType(APPLICATION_JSON)
                 .accept(APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(novoCartaoCorreto)))
+                .content(objectMapper.writeValueAsString(validCard)))
                 .andExpect(status().isCreated());
     }
 
     @Test
     void whenCreateCardAndExistYet() throws Exception {
-        when(cartaoService.criarCartao(cartaoPadraoDuplicado))
+        when(cardService.createCard(duplicateCard))
                           .thenThrow(DuplicateCardException.class);
 
         mockMvc.perform(post(BASE_URL)
                         .contentType(APPLICATION_JSON)
                         .accept(APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(cartaoPadraoDuplicado)))
+                        .content(objectMapper.writeValueAsString(duplicateCard)))
                 .andExpect(status().isUnprocessableEntity());
     }
 
     @Test
     void whenCreateCardWithWrongValuesOfCamp() throws Exception {
-        when(cartaoService.criarCartao(novoCartaoComAlfaNumerico))
+        when(cardService.createCard(cardWrongValue))
                           .thenThrow(InvalidCardException.class);
 
         mockMvc.perform(post(BASE_URL)
                         .contentType(APPLICATION_JSON)
                         .accept(APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(novoCartaoComAlfaNumerico)))
+                        .content(objectMapper.writeValueAsString(cardWrongValue)))
                 .andExpect(status().isUnprocessableEntity());
     }
 
     @Test
     void whenValidCardHaveFunds() throws Exception {
-        when(cartaoService.obterSaldoCartao(NUMERO_CARTAO_VALIDO))
+        when(cardService.getBalance(VALID_CARD))
                           .thenReturn(BigDecimal.valueOf(500));
 
-        mockMvc.perform(get(BASE_URL + "/{numeroCartao}", NUMERO_CARTAO_VALIDO)
+        mockMvc.perform(get(BASE_URL + "/{numeroCartao}", VALID_CARD)
                         .contentType(APPLICATION_JSON)
                         .accept(APPLICATION_JSON))
                 .andExpect(status().isOk());
@@ -100,10 +100,10 @@ public class CardControllerTest {
 
     @Test
     void whenNonexistenteCardGetBalance() throws Exception {
-        when(cartaoService.obterSaldoCartao(NUMERO_CARTAO_INEXISTENTE))
+        when(cardService.getBalance(NONEXISTENT_CARD))
                           .thenThrow(NonexistentCardBalanceException.class);
 
-        mockMvc.perform(get(BASE_URL + "/{numeroCartao}", NUMERO_CARTAO_INEXISTENTE)
+        mockMvc.perform(get(BASE_URL + "/{numeroCartao}", NONEXISTENT_CARD)
                         .contentType(APPLICATION_JSON)
                         .accept(APPLICATION_JSON))
                 .andExpect(status().isNotFound());

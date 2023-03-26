@@ -24,7 +24,7 @@ import io.swagger.annotations.ApiResponses;
 
 @RestController
 @RequestMapping("/transacoes")
-@Api(tags = "VRCARD")
+@Api(tags = "TRANSACTION")
 public class TransactionController {
 
 	@PostMapping()
