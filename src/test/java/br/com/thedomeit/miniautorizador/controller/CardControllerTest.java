@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -56,13 +58,12 @@ public class CardControllerTest {
     @Test
     void whenValidCardHaveFunds() throws Exception {
         when(cardService.getBalance(VALID_CARD))
-                          .thenReturn(BigDecimal.valueOf(500));
+                          .thenReturn(new ResponseEntity<>(BigDecimal.valueOf(500),HttpStatus.OK));
 
         mockMvc.perform(get(BASE_URL + "/{numeroCartao}", VALID_CARD)
                         .contentType(APPLICATION_JSON)
                         .accept(APPLICATION_JSON))
                 .andExpect(status().isOk());
-
     }
 
     @Test

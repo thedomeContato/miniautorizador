@@ -5,36 +5,12 @@
   </p>
 </div><br>  
 
-<div align="left" >
-  <p>☇ 𝐓𝐄𝐂𝐍𝐎𝐋𝐎𝐆𝐈𝐀𝐒 & 𝐅𝐄𝐑𝐑𝐀𝐌𝐄𝐍𝐓𝐀𝐒❜ 🔨 ˀ</p>
-  
-   <table>
-     <tr>
-          <td>✅</td>
-          <td>𝐌𝐲𝐒𝐪𝐥 𝟖</td>
-          <td>✅</td>
-          <td>𝐉𝐃𝐊 𝟏𝟏 </td>
-      </tr>
-      <tr>
-          <td>✅</td>
-          <td>𝐌𝐀𝐕𝐄𝐍 𝟑.𝟖.𝟏</td>
-          <td>✅</td>
-          <td>𝐋𝐨𝐦𝐛𝐨𝐤</td>
-      </tr>
-      <tr>
-          <td>✅</td>
-          <td>𝐒𝐩𝐫𝐢𝐧𝐠</td>
-          <td>✅</td>
-          <td>𝐃𝐨𝐜𝐤𝐞𝐫</td>
-      </tr>
-      <tr>
-          <td>✅</td>
-          <td>𝐒𝐰𝐚𝐠𝐠𝐞𝐫</td>
-          <td>✅</td>
-          <td>𝐉𝐏𝐀</td>
-      </tr>
-   </table>
-</div><br>
+<div align="center">
+  <table>
+     <tr><td><b>⚠️ IMPORTANTE</b></td></tr>
+     <tr><td><i>A porta utilizada foi a 8081 ( http://localhost:8081/... ) durante o desenvolvimento.</i></td></tr>
+</table>
+</div>
 
 <div>
 <p align="left" >(( <b>𝐌𝐈𝐍𝐈 𝐀𝐔𝐓𝐎𝐑𝐈𝐙𝐀𝐃𝐎𝐑</b> ; ↴,<br></p>
@@ -45,13 +21,6 @@
 
 ┃• <i>Se aprovada, o valor da transação é debitado do saldo disponível do benefício, e informamos à maquininha que tudo ocorreu bem.<br></i>
 ┃• <i>Senão, apenas informamos o que impede a transação de ser feita e o processo se encerra.<br></i><br>
-
-<div align="center">
-  <table>
-     <tr><td><b>⚠️ IMPORTANTE</b></td></tr>
-     <tr><td><i>A porta utilizada foi a 8081 ( http://localhost:8081/... ) durante o desenvolvimento.</i></td></tr>
-</table>
-</div><br>
 
 🔵 𝕋𝔸ℝ𝔼𝔽𝔸<br>_______________
 
@@ -183,3 +152,35 @@ Caso alguma regra de autorização tenha barrado a mesma:
   fizermos 2 transações de R$10.00 ao mesmo tempo, em instâncias diferentes da aplicação, como o sistema deverá se comportar?</i>
 </p>
 </div><br>
+
+<div align="RIGHT" >
+  <p>☇ 𝐓𝐄𝐂𝐍𝐎𝐋𝐎𝐆𝐈𝐀𝐒 & 𝐅𝐄𝐑𝐑𝐀𝐌𝐄𝐍𝐓𝐀𝐒❜ 🔨 ˀ</p>
+  
+   <table>
+     <tr>
+          <td>✅</td>
+          <td>𝐌𝐲𝐒𝐪𝐥 𝟖</td>
+          <td>✅</td>
+          <td>𝐉𝐃𝐊 𝟏𝟏 </td>
+      </tr>
+      <tr>
+          <td>✅</td>
+          <td>𝐌𝐀𝐕𝐄𝐍 𝟑.𝟖.𝟏</td>
+          <td>✅</td>
+          <td>𝐋𝐨𝐦𝐛𝐨𝐤</td>
+      </tr>
+      <tr>
+          <td>✅</td>
+          <td>𝐒𝐩𝐫𝐢𝐧𝐠</td>
+          <td>✅</td>
+          <td>𝐃𝐨𝐜𝐤𝐞𝐫</td>
+      </tr>
+      <tr>
+          <td>✅</td>
+          <td>𝐒𝐰𝐚𝐠𝐠𝐞𝐫</td>
+          <td>✅</td>
+          <td>𝐉𝐏𝐀</td>
+      </tr>
+   </table>
+</div>
+

@@ -45,7 +45,7 @@ public class TransactionControllerTest {
                         .contentType(APPLICATION_JSON)
                         .accept(APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(validTransaction)))
-                .andExpect(status().isOk());
+                .andExpect(status().isCreated());
     }
 
 

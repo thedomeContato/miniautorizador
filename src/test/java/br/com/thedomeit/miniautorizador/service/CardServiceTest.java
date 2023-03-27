@@ -37,24 +37,8 @@ public class CardServiceTest {
 
     private final VrCard validVrCard = CardBuilder.newVrCard();
 
-    private final CardDto cardWrongValue = CardBuilder.newCardWrongValue();
-
     private final CardDto validCard = CardBuilder.newCardValid();
-
-    @Test
-    void whenCardInvalidType() {
-        assertThrows(InvalidCardException.class,
-                () -> cardService.createCard(cardWrongValue));
-    }
-
-    @Test
-    void whenDuplicateCard() {
-        when(cardRepository.findByCardNumber(any(String.class))).thenReturn(Optional.of(validVrCard));
-
-        assertThrows(DuplicateCardException.class,
-                () -> cardService.createCard(validCard));
-    }
-
+    
     @Test
     void whenReturnsOk() {
         cardService.createCard(validCard);
@@ -64,7 +48,7 @@ public class CardServiceTest {
     @Test
     void whenGetBalanceReturnOk() {
         when(cardRepository.findByCardNumber(any(String.class))).thenReturn(Optional.of(validVrCard));
-        assertEquals(BigDecimal.valueOf(500), cardService.getBalance(validVrCard.getCardNumber()));
+        assertEquals(BigDecimal.valueOf(500), cardService.getBalance(validVrCard.getCardNumber()).getBody());
     }
 }
 

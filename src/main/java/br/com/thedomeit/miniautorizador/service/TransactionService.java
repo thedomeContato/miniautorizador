@@ -2,18 +2,19 @@ package br.com.thedomeit.miniautorizador.service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import br.com.thedomeit.miniautorizador.domain.dto.TransactionDto;
 import br.com.thedomeit.miniautorizador.domain.entities.Transaction;
 import br.com.thedomeit.miniautorizador.domain.entities.VrCard;
-import br.com.thedomeit.miniautorizador.exception.InsufficientFundsException;
-import br.com.thedomeit.miniautorizador.exception.InvalidCardException;
-import br.com.thedomeit.miniautorizador.exception.NonexistentCardTransactionException;
+import br.com.thedomeit.miniautorizador.domain.enumtype.TransactionStatusEnum;
 import br.com.thedomeit.miniautorizador.repository.CardRepository;
 import br.com.thedomeit.miniautorizador.repository.TransactionRepository;
 import lombok.extern.log4j.Log4j2;
@@ -28,35 +29,39 @@ public class TransactionService {
 
     private final Object threadLock = new Object();
 
-    public void startTransaction(TransactionDto transaction) {
+    public ResponseEntity<TransactionStatusEnum> startTransaction(TransactionDto transaction) {
         log.info("Start Transaction...");
 
-        cardRepository.findByCardNumber(transaction.getNumeroCartao())
-                .ifPresentOrElse(card -> {
-                    log.info("Find Card {}.", card.getCardNumber());
+        Optional<VrCard> cardOptional = cardRepository.findByCardNumber(transaction.getNumeroCartao());
 
-                    validatePassword(transaction.getSenhaCartao(), card.getPassword());
+        VrCard card = cardOptional.orElse(new VrCard());	
 
-                    validateBalance(card.getBalance(), transaction.getValor());
+        if (card.getCardNumber() == null) {
+        	return new ResponseEntity<>(TransactionStatusEnum.CARTAO_INEXISTENTE, 
+        			                    HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+        
+        if (!validatePassword(transaction.getSenhaCartao(), card.getPassword())) {
+        	return new ResponseEntity<>(TransactionStatusEnum.SENHA_INVALIDA, 
+        			                    HttpStatus.UNPROCESSABLE_ENTITY); 
+        }
 
-                    finalizeTransaction(card, transaction);
+        if (validateBalance(card.getBalance(), transaction.getValor())) {
+        	return new ResponseEntity<>(TransactionStatusEnum.SALDO_INSUFICIENTE, 
+        			                    HttpStatus.UNPROCESSABLE_ENTITY);
+        }
 
-                }, () -> {
-                    log.error("Invalid Card.");
-                    throw new NonexistentCardTransactionException();
-                });
+        finalizeTransaction(card, transaction);
+
+        return new ResponseEntity<>(TransactionStatusEnum.OK, HttpStatus.OK);
     }
 
-    private void validatePassword(String senhaTransaction, String senhaVrCard) {
-        if (!senhaTransaction.equals(senhaVrCard))
-            throw new InvalidCardException();
-        log.info("Invalid Password.");
+    private Boolean validatePassword(String senhaTransaction, String senhaVrCard) {
+        return (senhaTransaction.equals(senhaVrCard));
     }
 
-    private void validateBalance(BigDecimal saldoVrCard, BigDecimal valorTransaction) {
-        if ((saldoVrCard.subtract(valorTransaction)).signum() == -1)
-            throw new InsufficientFundsException();
-        log.info("Insuficient Funds.");
+    private Boolean validateBalance(BigDecimal saldoVrCard, BigDecimal valorTransaction) {
+        return ((saldoVrCard.subtract(valorTransaction)).signum() == -1);
     }
 
     private void finalizeTransaction(VrCard card, TransactionDto transaction) {

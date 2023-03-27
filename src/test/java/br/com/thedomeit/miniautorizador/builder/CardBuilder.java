@@ -15,13 +15,6 @@ public class CardBuilder {
 
 	public Random random = new Random();
 
-    public static CardDto newCardWrongValue() {
-        return CardDto.builder()
-                .numeroCartao("AAAA123465667888")
-                .senhaCartao("1234")
-                .build();
-    }
-
     public static CardDto newCardValid() {
         return CardDto.builder()
                 .numeroCartao("1234567890123456")
